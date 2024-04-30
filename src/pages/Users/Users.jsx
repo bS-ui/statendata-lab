@@ -1,13 +1,14 @@
+import UserCard from '../../components/UserCard/UserCard'
 import { userData } from "../../data/userData"
 import './Users.css'
-console.log(userData)
 
-const Users = () => {
+const Users = (props) => {
+  console.log(userData)
   return (
     <>
       <h1>User List</h1>
       <div className="card-container">
-        {/* map the userData to UserCard components here */}
+        {userData.map(user => <UserCard user={user} key={user.id}/>)}
       </div> 
     </>
   )
