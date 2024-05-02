@@ -8,14 +8,34 @@ console.log(pokeData)
 const Pokedex = () => {
   const displayCount = 10
   const [currIdx, setCurrIdx] = useState(0)
-  const [displayedPokemon, setDisplayedPokemon] = useState(pokeData)
+  function filterPokemonData(newIndex) {
+    const filteredPokemon = pokeData.filter((pokemon, index) => index >= newIndex && index < newIndex + displayCount)
+    return filteredPokemon
+  }
+  const [displayedPokemon, setDisplayedPokemon] = useState(filterPokemonData(0))
+
+  const handleIncreaseCurrIdx = () => {
+    const newIdx = currIdx + displayCount
+    if (newIdx > pokeData.length) return
+    setCurrIdx(newIdx)
+    const filteredPokemon = filterPokemonData(newIdx)
+    setDisplayedPokemon(filteredPokemon)
+  }
+
+  const handleDecreaseCurrIdx = () => {
+    const newIdx = currIdx - displayCount
+    if (newIdx < 0 ) return
+    setCurrIdx(newIdx)
+    const filteredPokemon = filterPokemonData(newIdx)
+    setDisplayedPokemon(filteredPokemon)
+  }
 
   return ( 
     <>
       <h1>Pokemon List</h1>
       <div className="pagination-container">
-        <button>&lt;</button>
-        <button>&gt;</button>
+        <button onClick={() => handleDecreaseCurrIdx()}>{'<'}</button>
+        <button onClick={() => handleIncreaseCurrIdx()}>{'>'}</button>
       </div>
       <div className="num-results-container">
         Results ## - ## of {pokeData.length}
